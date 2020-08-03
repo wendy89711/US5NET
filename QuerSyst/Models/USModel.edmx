@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="USModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="T_ANSR_DATA">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+          </Key>
+          <Property Name="CASE_NO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="int" Nullable="false" />
+          <Property Name="ANSR_CONT" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="ANSR_DATE" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="QA_NO" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="T_ANSR_FILE">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+            <PropertyRef Name="FILE_NO" />
+          </Key>
+          <Property Name="CASE_NO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="int" Nullable="false" />
+          <Property Name="FILE_NO" Type="int" Nullable="false" />
+          <Property Name="FILE_ADDR" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FILE_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UPLD_DATE" Type="varchar" MaxLength="17" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_CASE_BASE">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+          </Key>
+          <Property Name="CASE_NO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SYST_NO" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="CLAS_NO" Type="varchar" MaxLength="5" />
+          <Property Name="EMPL_NO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CASE_STAR_DATE" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="CASE_END_DATE" Type="varchar" MaxLength="17" />
+        </EntityType>
+        <EntityType Name="T_QUER_DATA">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+          </Key>
+          <Property Name="CASE_NO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="int" Nullable="false" />
+          <Property Name="URGE_IF" Type="int" Nullable="false" />
+          <Property Name="EXPE_REPL_TIME" Type="int" Nullable="false" />
+          <Property Name="QUER_CONT" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="QUER_DATE" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="CASE_STAT" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_QUER_FILE">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+            <PropertyRef Name="FILE_NO" />
+          </Key>
+          <Property Name="CASE_NO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="int" Nullable="false" />
+          <Property Name="FILE_NO" Type="int" Nullable="false" />
+          <Property Name="FILE_ADDR" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FILE_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UPLD_DATE" Type="varchar" MaxLength="17" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_SYST_CLAS">
+          <Key>
+            <PropertyRef Name="SYST_NO" />
+            <PropertyRef Name="CLAS_NO" />
+          </Key>
+          <Property Name="SYST_NO" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="CLAS_NO" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="CLAS_NAME" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_SYST_QADB">
+          <Key>
+            <PropertyRef Name="SYST_NO" />
+            <PropertyRef Name="QA_NO" />
+          </Key>
+          <Property Name="SYST_NO" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="QA_NO" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="QUER_CONT" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="ANSR_CONT" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_ANSR_DATA_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_ANSR_DATA" Type="Self.T_ANSR_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_ANSR_DATA">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ANSR_FILE_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_ANSR_FILE" Type="Self.T_ANSR_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_ANSR_FILE">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_QUER_DATA_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_QUER_DATA" Type="Self.T_QUER_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_QUER_DATA">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_QUER_FILE_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_QUER_FILE" Type="Self.T_QUER_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_QUER_FILE">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="USModelStoreContainer">
+          <EntitySet Name="T_ANSR_DATA" EntityType="Self.T_ANSR_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ANSR_FILE" EntityType="Self.T_ANSR_FILE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_CASE_BASE" EntityType="Self.T_CASE_BASE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_QUER_DATA" EntityType="Self.T_QUER_DATA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_QUER_FILE" EntityType="Self.T_QUER_FILE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SYST_CLAS" EntityType="Self.T_SYST_CLAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_SYST_QADB" EntityType="Self.T_SYST_QADB" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_T_ANSR_DATA_T_CASE_BASE" Association="Self.FK_T_ANSR_DATA_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_ANSR_DATA" EntitySet="T_ANSR_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ANSR_FILE_T_CASE_BASE" Association="Self.FK_T_ANSR_FILE_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_ANSR_FILE" EntitySet="T_ANSR_FILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_QUER_DATA_T_CASE_BASE" Association="Self.FK_T_QUER_DATA_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_QUER_DATA" EntitySet="T_QUER_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_QUER_FILE_T_CASE_BASE" Association="Self.FK_T_QUER_FILE_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_QUER_FILE" EntitySet="T_QUER_FILE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="USModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="T_ANSR_DATA">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+          </Key>
+          <Property Name="CASE_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="Int32" Nullable="false" />
+          <Property Name="ANSR_CONT" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ANSR_DATE" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QA_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_CASE_BASE" Relationship="Self.FK_T_ANSR_DATA_T_CASE_BASE" FromRole="T_ANSR_DATA" ToRole="T_CASE_BASE" />
+        </EntityType>
+        <EntityType Name="T_ANSR_FILE">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+            <PropertyRef Name="FILE_NO" />
+          </Key>
+          <Property Name="CASE_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="Int32" Nullable="false" />
+          <Property Name="FILE_NO" Type="Int32" Nullable="false" />
+          <Property Name="FILE_ADDR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FILE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UPLD_DATE" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_CASE_BASE" Relationship="Self.FK_T_ANSR_FILE_T_CASE_BASE" FromRole="T_ANSR_FILE" ToRole="T_CASE_BASE" />
+        </EntityType>
+        <EntityType Name="T_CASE_BASE">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+          </Key>
+          <Property Name="CASE_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SYST_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAS_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="EMPL_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CASE_STAR_DATE" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CASE_END_DATE" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="T_ANSR_DATA" Relationship="Self.FK_T_ANSR_DATA_T_CASE_BASE" FromRole="T_CASE_BASE" ToRole="T_ANSR_DATA" />
+          <NavigationProperty Name="T_ANSR_FILE" Relationship="Self.FK_T_ANSR_FILE_T_CASE_BASE" FromRole="T_CASE_BASE" ToRole="T_ANSR_FILE" />
+          <NavigationProperty Name="T_QUER_DATA" Relationship="Self.FK_T_QUER_DATA_T_CASE_BASE" FromRole="T_CASE_BASE" ToRole="T_QUER_DATA" />
+          <NavigationProperty Name="T_QUER_FILE" Relationship="Self.FK_T_QUER_FILE_T_CASE_BASE" FromRole="T_CASE_BASE" ToRole="T_QUER_FILE" />
+        </EntityType>
+        <EntityType Name="T_QUER_DATA">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+          </Key>
+          <Property Name="CASE_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="Int32" Nullable="false" />
+          <Property Name="URGE_IF" Type="Int32" Nullable="false" />
+          <Property Name="EXPE_REPL_TIME" Type="Int32" Nullable="false" />
+          <Property Name="QUER_CONT" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="QUER_DATE" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CASE_STAT" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_CASE_BASE" Relationship="Self.FK_T_QUER_DATA_T_CASE_BASE" FromRole="T_QUER_DATA" ToRole="T_CASE_BASE" />
+        </EntityType>
+        <EntityType Name="T_QUER_FILE">
+          <Key>
+            <PropertyRef Name="CASE_NO" />
+            <PropertyRef Name="QUER_NUMB" />
+            <PropertyRef Name="FILE_NO" />
+          </Key>
+          <Property Name="CASE_NO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUER_NUMB" Type="Int32" Nullable="false" />
+          <Property Name="FILE_NO" Type="Int32" Nullable="false" />
+          <Property Name="FILE_ADDR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FILE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UPLD_DATE" Type="String" MaxLength="17" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="T_CASE_BASE" Relationship="Self.FK_T_QUER_FILE_T_CASE_BASE" FromRole="T_QUER_FILE" ToRole="T_CASE_BASE" />
+        </EntityType>
+        <EntityType Name="T_SYST_CLAS">
+          <Key>
+            <PropertyRef Name="SYST_NO" />
+            <PropertyRef Name="CLAS_NO" />
+          </Key>
+          <Property Name="SYST_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAS_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CLAS_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_SYST_QADB">
+          <Key>
+            <PropertyRef Name="SYST_NO" />
+            <PropertyRef Name="QA_NO" />
+          </Key>
+          <Property Name="SYST_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QA_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUER_CONT" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ANSR_CONT" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_ANSR_DATA_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_ANSR_DATA" Type="Self.T_ANSR_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_ANSR_DATA">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_ANSR_FILE_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_ANSR_FILE" Type="Self.T_ANSR_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_ANSR_FILE">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_QUER_DATA_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_QUER_DATA" Type="Self.T_QUER_DATA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_QUER_DATA">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_QUER_FILE_T_CASE_BASE">
+          <End Role="T_CASE_BASE" Type="Self.T_CASE_BASE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="T_QUER_FILE" Type="Self.T_QUER_FILE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_CASE_BASE">
+              <PropertyRef Name="CASE_NO" />
+            </Principal>
+            <Dependent Role="T_QUER_FILE">
+              <PropertyRef Name="CASE_NO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="USEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="T_ANSR_DATA" EntityType="Self.T_ANSR_DATA" />
+          <EntitySet Name="T_ANSR_FILE" EntityType="Self.T_ANSR_FILE" />
+          <EntitySet Name="T_CASE_BASE" EntityType="Self.T_CASE_BASE" />
+          <EntitySet Name="T_QUER_DATA" EntityType="Self.T_QUER_DATA" />
+          <EntitySet Name="T_QUER_FILE" EntityType="Self.T_QUER_FILE" />
+          <EntitySet Name="T_SYST_CLAS" EntityType="Self.T_SYST_CLAS" />
+          <EntitySet Name="T_SYST_QADB" EntityType="Self.T_SYST_QADB" />
+          <AssociationSet Name="FK_T_ANSR_DATA_T_CASE_BASE" Association="Self.FK_T_ANSR_DATA_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_ANSR_DATA" EntitySet="T_ANSR_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_ANSR_FILE_T_CASE_BASE" Association="Self.FK_T_ANSR_FILE_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_ANSR_FILE" EntitySet="T_ANSR_FILE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_QUER_DATA_T_CASE_BASE" Association="Self.FK_T_QUER_DATA_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_QUER_DATA" EntitySet="T_QUER_DATA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_QUER_FILE_T_CASE_BASE" Association="Self.FK_T_QUER_FILE_T_CASE_BASE">
+            <End Role="T_CASE_BASE" EntitySet="T_CASE_BASE" />
+            <End Role="T_QUER_FILE" EntitySet="T_QUER_FILE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="USModelStoreContainer" CdmEntityContainer="USEntities">
+          <EntitySetMapping Name="T_ANSR_DATA">
+            <EntityTypeMapping TypeName="USModel.T_ANSR_DATA">
+              <MappingFragment StoreEntitySet="T_ANSR_DATA">
+                <ScalarProperty Name="CASE_NO" ColumnName="CASE_NO" />
+                <ScalarProperty Name="QUER_NUMB" ColumnName="QUER_NUMB" />
+                <ScalarProperty Name="ANSR_CONT" ColumnName="ANSR_CONT" />
+                <ScalarProperty Name="ANSR_DATE" ColumnName="ANSR_DATE" />
+                <ScalarProperty Name="QA_NO" ColumnName="QA_NO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ANSR_FILE">
+            <EntityTypeMapping TypeName="USModel.T_ANSR_FILE">
+              <MappingFragment StoreEntitySet="T_ANSR_FILE">
+                <ScalarProperty Name="CASE_NO" ColumnName="CASE_NO" />
+                <ScalarProperty Name="QUER_NUMB" ColumnName="QUER_NUMB" />
+                <ScalarProperty Name="FILE_NO" ColumnName="FILE_NO" />
+                <ScalarProperty Name="FILE_ADDR" ColumnName="FILE_ADDR" />
+                <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+                <ScalarProperty Name="UPLD_DATE" ColumnName="UPLD_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_CASE_BASE">
+            <EntityTypeMapping TypeName="USModel.T_CASE_BASE">
+              <MappingFragment StoreEntitySet="T_CASE_BASE">
+                <ScalarProperty Name="CASE_NO" ColumnName="CASE_NO" />
+                <ScalarProperty Name="SYST_NO" ColumnName="SYST_NO" />
+                <ScalarProperty Name="CLAS_NO" ColumnName="CLAS_NO" />
+                <ScalarProperty Name="EMPL_NO" ColumnName="EMPL_NO" />
+                <ScalarProperty Name="CASE_STAR_DATE" ColumnName="CASE_STAR_DATE" />
+                <ScalarProperty Name="CASE_END_DATE" ColumnName="CASE_END_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_QUER_DATA">
+            <EntityTypeMapping TypeName="USModel.T_QUER_DATA">
+              <MappingFragment StoreEntitySet="T_QUER_DATA">
+                <ScalarProperty Name="CASE_NO" ColumnName="CASE_NO" />
+                <ScalarProperty Name="QUER_NUMB" ColumnName="QUER_NUMB" />
+                <ScalarProperty Name="URGE_IF" ColumnName="URGE_IF" />
+                <ScalarProperty Name="EXPE_REPL_TIME" ColumnName="EXPE_REPL_TIME" />
+                <ScalarProperty Name="QUER_CONT" ColumnName="QUER_CONT" />
+                <ScalarProperty Name="QUER_DATE" ColumnName="QUER_DATE" />
+                <ScalarProperty Name="CASE_STAT" ColumnName="CASE_STAT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_QUER_FILE">
+            <EntityTypeMapping TypeName="USModel.T_QUER_FILE">
+              <MappingFragment StoreEntitySet="T_QUER_FILE">
+                <ScalarProperty Name="CASE_NO" ColumnName="CASE_NO" />
+                <ScalarProperty Name="QUER_NUMB" ColumnName="QUER_NUMB" />
+                <ScalarProperty Name="FILE_NO" ColumnName="FILE_NO" />
+                <ScalarProperty Name="FILE_ADDR" ColumnName="FILE_ADDR" />
+                <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+                <ScalarProperty Name="UPLD_DATE" ColumnName="UPLD_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SYST_CLAS">
+            <EntityTypeMapping TypeName="USModel.T_SYST_CLAS">
+              <MappingFragment StoreEntitySet="T_SYST_CLAS">
+                <ScalarProperty Name="SYST_NO" ColumnName="SYST_NO" />
+                <ScalarProperty Name="CLAS_NO" ColumnName="CLAS_NO" />
+                <ScalarProperty Name="CLAS_NAME" ColumnName="CLAS_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_SYST_QADB">
+            <EntityTypeMapping TypeName="USModel.T_SYST_QADB">
+              <MappingFragment StoreEntitySet="T_SYST_QADB">
+                <ScalarProperty Name="SYST_NO" ColumnName="SYST_NO" />
+                <ScalarProperty Name="QA_NO" ColumnName="QA_NO" />
+                <ScalarProperty Name="QUER_CONT" ColumnName="QUER_CONT" />
+                <ScalarProperty Name="ANSR_CONT" ColumnName="ANSR_CONT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
