@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace QuerSyst.Models
+namespace US5NET.Models
 {
     using System;
     using System.Collections.Generic;
