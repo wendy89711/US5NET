@@ -11,11 +11,15 @@ namespace US5NET.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class T_SYST_CLAS
     {
+        
         public string SYST_NO { get; set; }
+        [DisplayName("分類序號")]
         public string CLAS_NO { get; set; }
+        [DisplayName("分類名稱")]
         public string CLAS_NAME { get; set; }
     }
 }

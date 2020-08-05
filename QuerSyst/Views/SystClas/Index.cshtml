@@ -1,0 +1,74 @@
+﻿@model IEnumerable<US5NET.Models.T_SYST_CLAS>
+
+@{
+    ViewBag.Title = "系統問題分類";
+}
+
+<h2>系統問題分類</h2>
+
+
+<div class="form-group">
+    <label for="select" class="col-lg-2 control-label">選擇系統</label>
+    <div class="col-lg-10">
+        <select class="form-control" id="select" onchange="showlist(this.value)">
+            @*@foreach (var item in Model)
+        {
+            <option>
+                @Html.DisplayFor(modelItem => item.SYST_NO)
+            </option>
+        }*@
+            <option value="OE">OE</option>
+            <option value="PM">PM</option>
+        </select>
+    </div>
+</div>
+<br />
+
+<p>
+    @Html.ActionLink("新增問題分類", "Create")
+</p>
+
+<table class="table" id="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CLAS_NO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CLAS_NAME)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CLAS_NO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CLAS_NAME)
+            </td>
+            <td>
+                @Html.Raw(@Html.ActionLink("Edit", "Edit", new { systno = item.SYST_NO, id = item.CLAS_NO }, null)) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CLAS_NO }
+                        ,new { onclick = "return confirm('確定要刪除嗎？')"} )
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function showlist(val) {
+
+        //ajax
+        $.ajax({
+            method: "POST",
+            url: '@Url.Action("Getdata", "SystClas")',
+            data: { id: val }
+        })
+        .done(function (data) {
+            //for
+            //    $("#table").html("<tr> ... ");
+        });
+    }
+</script>

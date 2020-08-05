@@ -242,8 +242,8 @@
         </EntityType>
         <EntityType Name="T_SYST_CLAS">
           <Key>
-            <PropertyRef Name="SYST_NO" />
             <PropertyRef Name="CLAS_NO" />
+            <PropertyRef Name="SYST_NO" />
           </Key>
           <Property Name="SYST_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CLAS_NO" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />

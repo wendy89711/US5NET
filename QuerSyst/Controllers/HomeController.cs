@@ -4,10 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using US5NET.Models;
+
 namespace QuerSyst.Controllers
 {
     public class HomeController : Controller
     {
+        USEntities us = new USEntities();
+
         public ActionResult Index()
         {
             return View();
@@ -26,6 +30,7 @@ namespace QuerSyst.Controllers
 
             return View();
         }
+
 
    
     }
