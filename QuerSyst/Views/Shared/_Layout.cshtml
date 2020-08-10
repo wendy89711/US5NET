@@ -7,9 +7,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
-
+    <!-- css -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <!-- js -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
 </head>
 
@@ -45,9 +49,11 @@
                         <div class="dropdown-menu" aria-labelledby="manager">
                             <a class="dropdown-item" href="#">回覆問題</a>
                             <a class="dropdown-item" href="#">查詢統計資料</a>
-                            <a class="dropdown-item" href="">@Html.ActionLink("問題分類維護", "Index", "SystClas")</a>
+                            @*<a class="dropdown-item" href="@Url.Action("Index", "SystClas")">@Html.ActionLink("問題分類維護", "Index", "SystClas")</a>*@
+                            <a class="dropdown-item" href="@Url.Action("Index", "SystClas")">問題分類維護</a>
+                           
                             @*@Html.ActionLink("問題分類維護", "Index", "SystClas", new { @class = "dropdown-item"})*@
-                            <a class="dropdown-item" href="#">Q&A維護</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "SystQAdb")">Q&A維護</a>
                         </div>
                     </li>
                 </ul>
@@ -69,8 +75,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
 </body>
 </html>

@@ -15,7 +15,8 @@ namespace US5NET.Models
 
     public partial class T_SYST_CLAS
     {
-        
+
+        [DisplayName("系統名稱")]
         public string SYST_NO { get; set; }
         [DisplayName("分類序號")]
         public string CLAS_NO { get; set; }

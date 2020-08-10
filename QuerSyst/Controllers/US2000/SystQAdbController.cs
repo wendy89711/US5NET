@@ -10,15 +10,14 @@ using US5NET.Models;
 
 namespace US5NET.Controllers.US2000
 {
-    public class SystClasController : Controller
+    public class SystQAdbController : Controller
     {
         private USEntities db = new USEntities();
 
-        // GET: T_SYST_CLAS
+        // GET: SystQAdb
         public ActionResult Index()
         {
-            return View(db.T_SYST_CLAS.ToList());
-            //return View();
+            return View(db.T_SYST_QADB.ToList());
         }
 
         //Ajax Action
@@ -26,94 +25,81 @@ namespace US5NET.Controllers.US2000
         public JsonResult Getdata(string id)
         {
             //Model Select
-            var data = db.T_SYST_CLAS.Where(m => m.SYST_NO.Contains(id)).ToList();
+            var data = db.T_SYST_QADB.Where(m => m.SYST_NO.Contains(id)).ToList();
 
 
             return Json(data);
         }
 
-        //Form Submit Action
-        public ActionResult GetdataSubmit(T_SYST_CLAS t_SYST_CLAS)
-        {
-            //Model Select
-            var data = db.T_SYST_CLAS.Where(m => m.SYST_NO.Contains(t_SYST_CLAS.SYST_NO)).ToList();
-
-            //
-            return View("Index", data);
-        }
-
-
-        // GET: T_SYST_CLAS/Create
+        // GET: SystQAdb/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: T_SYST_CLAS/Create
+        // POST: SystQAdb/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SYST_NO,CLAS_NO,CLAS_NAME")] T_SYST_CLAS t_SYST_CLAS)
+        public ActionResult Create([Bind(Include = "SYST_NO,QA_NO,QUER_CONT,ANSR_CONT")] T_SYST_QADB t_SYST_QADB)
         {
             if (ModelState.IsValid)
             {
-                db.T_SYST_CLAS.Add(t_SYST_CLAS);
+                db.T_SYST_QADB.Add(t_SYST_QADB);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(t_SYST_CLAS);
+            return View(t_SYST_QADB);
         }
 
-        // GET: T_SYST_CLAS/Edit/5
+        // GET: SystQAdb/Edit/5
         public ActionResult Edit(string systno, string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //T_SYST_CLAS t_SYST_CLAS = db.T_SYST_CLAS.Find(systno,id);
-            var t_SYST_CLAS = db.T_SYST_CLAS.Where(m => m.SYST_NO == systno && m.CLAS_NO == id);
+            //T_SYST_QADB t_SYST_QADB = db.T_SYST_QADB.Find(id);
+            var t_SYST_QADB = db.T_SYST_QADB.Where(m => m.SYST_NO == systno && m.QA_NO == id);
 
-            if (t_SYST_CLAS == null)
+            if (t_SYST_QADB == null)
             {
                 return HttpNotFound();
             }
-
-            return View(t_SYST_CLAS.ToList());
+            return View(t_SYST_QADB.ToList());
         }
 
-       
-        // POST: T_SYST_CLAS/Edit/5
+        // POST: SystQAdb/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SYST_NO,CLAS_NO,CLAS_NAME")] T_SYST_CLAS t_SYST_CLAS)
+        public ActionResult Edit([Bind(Include = "SYST_NO,QA_NO,QUER_CONT,ANSR_CONT")] T_SYST_QADB t_SYST_QADB)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(t_SYST_CLAS).State = EntityState.Modified;
+                db.Entry(t_SYST_QADB).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(t_SYST_CLAS);
+            return View(t_SYST_QADB);
         }
 
-        // GET: T_SYST_CLAS/Delete/5
+        // GET: SystQAdb/Delete/5
         public ActionResult Delete(string systno, string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var t_SYST_CLAS = db.T_SYST_CLAS.Where(m => m.SYST_NO == systno && m.CLAS_NO == id).FirstOrDefault();
-            db.T_SYST_CLAS.Remove(t_SYST_CLAS);
+            var t_SYST_QADB = db.T_SYST_QADB.Where(m => m.SYST_NO == systno && m.QA_NO == id).FirstOrDefault();
+            db.T_SYST_QADB.Remove(t_SYST_QADB);
             db.SaveChanges();
             return RedirectToAction("Index");
 
-            if (t_SYST_CLAS == null)
+            if (t_SYST_QADB == null)
             {
                 return HttpNotFound();
             }
-            return View(t_SYST_CLAS);
+            return View(t_SYST_QADB);
         }
 
 

@@ -11,12 +11,17 @@ namespace US5NET.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class T_SYST_QADB
     {
+        [DisplayName("系統名稱")]
         public string SYST_NO { get; set; }
+        [DisplayName("序號")]
         public string QA_NO { get; set; }
+        [DisplayName("問題")]
         public string QUER_CONT { get; set; }
+        [DisplayName("解答")]
         public string ANSR_CONT { get; set; }
     }
 }

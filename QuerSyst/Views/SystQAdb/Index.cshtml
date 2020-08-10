@@ -1,0 +1,146 @@
+﻿@model IEnumerable<US5NET.Models.T_SYST_QADB>
+
+@{
+    ViewBag.Title = "Q&A";
+}
+
+<h2>Q&A</h2>
+
+<script>
+    $(document).ready(function () {
+
+        function dropDownData() {
+            var apiurl = "http://wwwap3.dorts.gov.tw/API/us5netapi/api/appllist";
+            $.ajax({
+                url: apiurl,
+                type: 'GET',
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function (i) {
+                        $('#select').append($('<option></option>')
+                            .val(data[i].APPL_ID)
+                            .html(data[i].APPL_NAME));
+                        //同下
+                        //<option value=data[i].APPL_ID>data[i].APPL_NAME</option>
+                    });
+                },
+                error: function (msg) { alert(msg); }
+            })
+        }
+
+        //初始執行的方法
+        dropDownData();
+    })
+</script>
+
+<div class="form-group">
+    <label for="select" class="col-lg-2 control-label">選擇系統</label>
+    <div class="col-lg-10">
+        <select id="select" name="select" onchange="showlist(this.value)"></select>
+
+        @*<select class="form-control" id="select" onchange="showlist(this.value)">
+                <option value="">請選擇...</option>
+                <option value="OE">OE</option>
+                <option value="PM">PM</option>
+            </select>*@
+        <script>
+
+        </script>
+    </div>
+</div>
+<br />
+
+<p>
+    @Html.ActionLink("新增QA", "Create")
+</p>
+
+<table class="display" id="QAtable" style="width:100%">
+    <thead>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.QA_NO)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.QUER_CONT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ANSR_CONT)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QA_NO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QUER_CONT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ANSR_CONT)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { systno = item.SYST_NO, id = item.QA_NO }, null) |
+                    @Html.ActionLink("Delete", "Delete", new { systno = item.SYST_NO, id = item.QA_NO }
+                           , new { onclick = "return confirm('確定要刪除嗎？')" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="~/Content/datatable/jquery.dataTables.min.js"></script>
+<!-- rel="stylesheet"必要 -->
+<link href="~/Content/datatable/jquery.dataTables.min.css" rel="stylesheet" />
+
+<script>
+
+    var QAtable;
+    $(document).ready(function () {
+        //alert('test');
+        QAtable = $('#QAtable').DataTable();
+    });
+
+    function showlist(val) {
+        $.ajax({
+            method: "POST",
+            url: '@Url.Action("Getdata", "SystQAdb")',
+            data: { id: val },
+        })
+            .done(function (data) {
+
+                //清除原datatable的資料
+                QAtable.clear();
+                //將ajax從controller得到的data，利用迴圈新增至datatable內
+                for (var i = 0; i < data.length; i++) {
+                    var col4 = "<a href='/SystQAdb/Edit/" + data[i].QA_NO + "?systno="
+                        + data[i].SYST_NO + "'>Edit</a> | <a href='/SystQAdb/Delete/"
+                        + data[i].QA_NO + "?systno=" + data[i].SYST_NO + "' onclick='return confirm(&#39;確定要刪除嗎？&#39;)'>Delete</a>";
+                    QAtable.row.add([
+                        data[i].QA_NO,
+                        data[i].QUER_CONT,
+                        data[i].ANSR_CONT,
+                        col4,
+                    ]).draw();
+                }
+            });
+    }
+</script>
+
+@*表格箭頭*@
+<style>
+    table.dataTable thead .sorting_asc {
+        background: url("http://cdn.datatables.net/1.10.0/images/sort_asc.png") no-repeat center left;
+    }
+
+    table.dataTable thead .sorting_desc {
+        background: url("http://cdn.datatables.net/1.10.0/images/sort_desc.png") no-repeat center left;
+    }
+
+    table.dataTable thead .sorting {
+        background: url("http://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center left;
+    }
+</style>
