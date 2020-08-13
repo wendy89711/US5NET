@@ -1,4 +1,4 @@
-﻿@model IEnumerable<US5NET.Models.T_SYST_QADB>
+﻿@model IEnumerable<US5NET.Models.US.T_SYST_QADB>
 
 @{
     ViewBag.Title = "編輯Q&A";
@@ -19,8 +19,9 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.First().QUER_CONT, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.First().QUER_CONT, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10"> 
+                @Html.TextAreaFor(model => model.First().QUER_CONT, new { @class = "form-control form-control-full", rows = 6, style = "resize:none" })
+                @*@Html.EditorFor(model => model.First().QUER_CONT, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.First().QUER_CONT, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +29,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.First().ANSR_CONT, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.First().ANSR_CONT, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.First().ANSR_CONT, new { @class = "form-control form-control-full", rows = 6, style = "resize:none" })
+                @*Html.EditorFor(model => model.First().ANSR_CONT, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.First().ANSR_CONT, "", new { @class = "text-danger" })
             </div>
         </div>

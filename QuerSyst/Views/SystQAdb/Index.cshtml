@@ -1,4 +1,4 @@
-﻿@model IEnumerable<US5NET.Models.T_SYST_QADB>
+﻿@model IEnumerable<US5NET.Models.US.T_SYST_QADB>
 
 @{
     ViewBag.Title = "Q&A";
@@ -15,11 +15,12 @@
                 url: apiurl,
                 type: 'GET',
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
+                    $('#select').append($('<option value="">請選擇...</option>'));
                     $.each(data, function (i) {
                         $('#select').append($('<option></option>')
                             .val(data[i].APPL_ID)
-                            .html(data[i].APPL_NAME));
+                            .html(data[i].APPL_ID + " " + data[i].APPL_NAME));
                         //同下
                         //<option value=data[i].APPL_ID>data[i].APPL_NAME</option>
                     });
@@ -57,9 +58,9 @@
 <table class="display" id="QAtable" style="width:100%">
     <thead>
         <tr>
-            <td>
+            <th>
                 @Html.DisplayNameFor(model => model.QA_NO)
-            </td>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.QUER_CONT)
             </th>
@@ -102,10 +103,16 @@
     $(document).ready(function () {
         //alert('test');
         QAtable = $('#QAtable').DataTable();
+
+        //初始清空
+        QAtable.clear().draw();
     });
 
     function showlist(val) {
-        $.ajax({
+        if (val == "") {
+            QAtable.clear().draw();
+        } else {
+            $.ajax({
             method: "POST",
             url: '@Url.Action("Getdata", "SystQAdb")',
             data: { id: val },
@@ -113,7 +120,7 @@
             .done(function (data) {
 
                 //清除原datatable的資料
-                QAtable.clear();
+                QAtable.clear().draw();
                 //將ajax從controller得到的data，利用迴圈新增至datatable內
                 for (var i = 0; i < data.length; i++) {
                     var col4 = "<a href='/SystQAdb/Edit/" + data[i].QA_NO + "?systno="
@@ -127,6 +134,7 @@
                     ]).draw();
                 }
             });
+        }
     }
 </script>
 

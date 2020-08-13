@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace US5NET.Models
+namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class T_QUER_DATA
+    public partial class T_QUER_FILE
     {
         public string CASE_NO { get; set; }
         public int QUER_NUMB { get; set; }
-        public int URGE_IF { get; set; }
-        public int EXPE_REPL_TIME { get; set; }
-        public string QUER_CONT { get; set; }
-        public string QUER_DATE { get; set; }
-        public string CASE_STAT { get; set; }
+        public int FILE_NO { get; set; }
+        public string FILE_ADDR { get; set; }
+        public string FILE_NAME { get; set; }
+        public string UPLD_DATE { get; set; }
     
         public virtual T_CASE_BASE T_CASE_BASE { get; set; }
     }

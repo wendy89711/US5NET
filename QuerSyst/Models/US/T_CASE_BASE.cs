@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace US5NET.Models
+namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;

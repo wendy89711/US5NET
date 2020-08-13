@@ -7,21 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace US5NET.Models
+namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
-    public partial class T_SYST_QADB
+    
+    public partial class T_QUER_DATA
     {
-        [DisplayName("系統名稱")]
-        public string SYST_NO { get; set; }
-        [DisplayName("序號")]
-        public string QA_NO { get; set; }
-        [DisplayName("問題")]
+        public string CASE_NO { get; set; }
+        public int QUER_NUMB { get; set; }
+        public int URGE_IF { get; set; }
+        public int EXPE_REPL_TIME { get; set; }
         public string QUER_CONT { get; set; }
-        [DisplayName("解答")]
-        public string ANSR_CONT { get; set; }
+        public string QUER_DATE { get; set; }
+        public string CASE_STAT { get; set; }
+    
+        public virtual T_CASE_BASE T_CASE_BASE { get; set; }
     }
 }

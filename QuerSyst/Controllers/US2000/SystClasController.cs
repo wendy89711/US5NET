@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using US5NET.Models;
+using US5NET.Models.US;
 
 namespace US5NET.Controllers.US2000
 {

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<US5NET.Models.T_SYST_CLAS>
+﻿@model IEnumerable<US5NET.Models.US.T_SYST_CLAS>
 
 @{
     ViewBag.Title = "系統問題分類";
@@ -8,14 +8,14 @@
 
 <script>
     $(document).ready(function () {
-
         function dropDownData() {
             var apiurl = "http://wwwap3.dorts.gov.tw/API/us5netapi/api/appllist";            
             $.ajax({
                 url: apiurl,
                 type: 'GET',
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
+                    $('#select').append($('<option value="">請選擇...</option>'));
                     $.each(data, function (i) {
                         $('#select').append($('<option></option>')
                             .val(data[i].APPL_ID)
@@ -103,15 +103,21 @@
     $(document).ready(function () {
         // Handler for .ready() called. 頁面一載入就執行
         table = $('#table').DataTable();
+
+        //初始清空
+        table.clear().draw();
     });
 
     //方法1: Ajax
     function showlist(val) {
-        $.ajax({
-            method: "POST",
-            url: '@Url.Action("Getdata", "SystClas")',
-            data: { id: val },
-        })
+        if (val == "") {
+            table.clear().draw();
+        } else {
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("Getdata", "SystClas")',
+                data: { id: val },
+            })
             .done(function (data) {
                 @*
                 //Clear
@@ -130,7 +136,7 @@
                 }
                 *@
                 //清除原datatable的資料
-                table.clear();
+                table.clear().draw();
                 //將ajax從controller得到的data，利用迴圈新增至datatable內
                 for (var i = 0; i < data.length; i++) {
                     var col3 = "<a href='/SystClas/Edit/" + data[i].CLAS_NO + "?systno="
@@ -142,7 +148,8 @@
                         col3,
                     ]).draw();
                 }
-        });
+            });
+        }
     }
 
     //方法2: 將整個頁面透過Form Submit(Reload)

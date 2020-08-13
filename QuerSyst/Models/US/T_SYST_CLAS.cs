@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace US5NET.Models
+namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class T_ANSR_DATA
+    using System.ComponentModel;
+
+    public partial class T_SYST_CLAS
     {
-        public string CASE_NO { get; set; }
-        public int QUER_NUMB { get; set; }
-        public string ANSR_CONT { get; set; }
-        public string ANSR_DATE { get; set; }
-        public string QA_NO { get; set; }
-    
-        public virtual T_CASE_BASE T_CASE_BASE { get; set; }
+        [DisplayName("系統代號")]
+        public string SYST_NO { get; set; }
+        [DisplayName("分類代號")]
+        public string CLAS_NO { get; set; }
+        [DisplayName("分類名稱")]
+        public string CLAS_NAME { get; set; }
     }
 }

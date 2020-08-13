@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace US5NET.Models
+namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class T_QUER_FILE
+    public partial class T_ANSR_DATA
     {
         public string CASE_NO { get; set; }
         public int QUER_NUMB { get; set; }
-        public int FILE_NO { get; set; }
-        public string FILE_ADDR { get; set; }
-        public string FILE_NAME { get; set; }
-        public string UPLD_DATE { get; set; }
+        public string ANSR_CONT { get; set; }
+        public string ANSR_DATE { get; set; }
+        public string QA_NO { get; set; }
     
         public virtual T_CASE_BASE T_CASE_BASE { get; set; }
     }

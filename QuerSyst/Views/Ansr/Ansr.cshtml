@@ -1,0 +1,255 @@
+﻿@model IEnumerable<US5NET.Models.US.V_CASE_LIST>
+
+@{
+    ViewBag.Title = "回覆問題";
+}
+
+
+
+
+
+<!-- Forms -->
+<div class="bs-docs-section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="forms">回覆問題</h2>
+                <hr />
+            </div>
+        </div>
+    </div>
+
+    <!-- left -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <div class="form-horizontal">
+                    <fieldset>
+                        <legend>詢問問題</legend>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">案件代號</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().CaseBase.CASE_NO)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">系統代號</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().CaseBase.SYST_NO)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">問題分類名稱</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().SystClas.CLAS_NAME)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">起案日期</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().CaseBase.CASE_STAR_DATE)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">詢問次號</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().QuerData.QUER_NUMB)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">是否緊急</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().QuerData.URGE_IF)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">希望回復時間</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().QuerData.EXPE_REPL_TIME)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">詢問人員姓名</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().CaseBase.EMPL_NO)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">案件狀態</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().QuerData.CASE_STAT)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">結案日期</label>
+                            <div class="col-lg-10">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="@Html.DisplayFor(model => model.First().CaseBase.CASE_END_DATE)" disabled="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label" for="disabledInput">問題說明</label>
+                            <div class="col-lg-10">
+                                <textarea class="form-control input-lg" rows="10" style="resize:none" id="disabledInput" placeholder="@Html.DisplayFor(model => model.First().QuerData.QUER_CONT)" disabled=""></textarea>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <!-- right -->
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form class="form-horizontal" action="@Url.Action("SaveResponseData")" id="add_commodity_form" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <legend>回覆問題</legend>
+
+                        <div class="form-group">
+                            <label class="control-label" for="focusedInput">案件代號</label>
+                            <input class="form-control" id="caseNo" name="caseNo" type="text" value="@Html.DisplayFor(model => model.First().CaseBase.CASE_NO)" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="focusedInput">詢問次號</label>
+                            <input class="form-control" id="querName" name="querName" type="text" value="@Html.DisplayFor(model => model.First().QuerData.QUER_NUMB)" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="inputDefault">Q&A項號</label>
+                            <input type="text" class="form-control" id="qaNo" name="qaNo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="inputDefault">內容</label>
+                            <textarea class="form-control input-lg" rows="10" style="resize:none" id="ansrNo" name="ansrNo" required></textarea>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group" style="width:99%">
+                        <!-- 上傳1 -->
+                        <input id="fileData" name="fileData" type="file" multiple class="file-loading">
+
+                        <!-- 上傳2 -->
+                        @*<label class="btn btn-info">
+                                <input type="file" id="fileData" name="fileData" style="display:none;" >
+                                <i class="fa fa-photo"></i> 上傳檔案
+                        </label>*@
+
+                        <!-- 上傳3 -->
+                        @*<section class="button-box">
+                                <input type="file" name="fileData" id="fileData" style="display:none" multiple>
+                                <label for="fileData" class="button-primary filebtn">
+                                    <img class="icon" src="~/images/plus.png" alt="上傳檔案">
+                                    <span style="width:700px auto">選擇檔案</span>
+                                </label>
+                            </section>*@
+
+                        <!-- 上傳資訊 -->
+                        @*<section class="info-box">
+                            <p>檔名：<span id="file_name"></span></p>
+                            <p>類型：<span id="file_type"></span></p>
+                            <p>大小：<span id="file_size"></span></p>
+                            <p>最後更新時間：<span id="file_time"></span></p>
+                            <p>縮圖：</p>
+                            <figure>
+                                <img id="file_thumbnail">
+                            </figure>
+                        </section>*@
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <button type="reset" class="btn btn-default" style="background-color:lightgray">@Html.ActionLink("取消", "Index")</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="shortcut icon" href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<style>
+    .filebtn {
+        /*width: 30%;*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+        padding: 8px 32px;
+        background: #FFF;
+        border: 1px solid #CCC;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: box-shadow .4s ease;
+    }
+
+        .filebtn:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23);
+        }
+
+        .filebtn span {
+            margin-left: 12px;
+            font-size: 22px;
+        }
+
+    .icon {
+        width: 2vw;
+    }
+
+    figure {
+        display: block;
+        margin: 0;
+    }
+
+    #file_thumbnail {
+        display: block;
+        max-width: 100%;
+        border: 1px solid #CCC;
+    }
+
+    .info-box {
+        width: 100%;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#table2').DataTable();
+    });
+
+    var inputFile = document.getElementById('fileData');
+
+    inputFile.addEventListener('change', function (e) {
+
+        var fileData = e.target.files[0]; // 檔案資訊
+        var fileName = fileData.name; // 檔案名稱
+        var fileType = fileData.type; // 檔案類型
+        var fileSize = Math.floor(fileData.size * 0.001); // 檔案大小轉成kb
+        var fileTime = fileData.lastModifiedDate;
+
+        console.log(fileData); // 用開發人員工具可看到資料
+
+        document.getElementById('file_name').innerText = fileName;
+        document.getElementById('file_type').innerText = fileType;
+        document.getElementById('file_size').innerText = fileSize + 'kb';
+        document.getElementById('file_time').innerText = fileTime;
+        document.getElementById('file_thumbnail').src = URL.createObjectURL(fileData);
+
+    }, false);
+</script>
+
+

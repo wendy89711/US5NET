@@ -1,0 +1,231 @@
+﻿@model IEnumerable<US5NET.Models.US.V_CASE_LIST>
+
+@{
+    ViewBag.Title = "案件清單";
+}
+
+<h2>案件清單</h2>
+
+<script>
+    $(document).ready(function () {
+        function dropDownData() {
+            var apiurl = "http://wwwap3.dorts.gov.tw/API/us5netapi/api/appllist";
+            $.ajax({
+                url: apiurl,
+                type: 'GET',
+                success: function (data) {
+                    //console.log(data);
+                    applist = data;
+                    $('#select').append($('<option value="">請選擇...</option>'));
+                    $.each(data, function (i) {
+                        $('#select').append($('<option></option>')
+                            .val(data[i].APPL_ID)
+                            .html(data[i].APPL_NAME));
+                        //同下
+                        //<option value=data[i].APPL_ID>data[i].APPL_NAME</option>
+
+                        var APPL_ID = data[i].APPL_ID;
+                        var APPL_NAME = data[i].APPL_NAME;
+                        var DEVP_ID = data[i].DEVP_ID;
+                        var DEVP_NAME = data[i].DEVP_NAME;
+                        //將Table Column Assign Name
+                        for (var j = 1; j <= $("#ModelRowCount").val(); j++) {
+                            /*
+                            console.log($("#ModelCount").val())
+                            console.log($("#SystName_" + j).html());
+                            console.log(data[i].APPL_ID == $("#SystName_" + j).text);
+                            console.log(APPL_ID);
+                            console.log(SystName);
+                            console.log("...");
+                            */
+                            var SystText = $("#SystText_" + j).html();
+                            var EmplText = $("#EmplText_" + j).html();
+
+                            if (APPL_ID == SystText) {
+                                $("#SystText_" + j).html(APPL_NAME);
+                            }
+                            if (DEVP_ID == EmplText) {
+                                $("#EmplText_" + j).html(DEVP_NAME);
+                            }
+                        }
+                    });
+                },
+                error: function (msg) { alert(msg); }
+            })
+        }
+        //初始執行的方法
+        dropDownData();
+    })
+</script>
+
+<div class="form-group">
+    <label for="select" class="col-lg-2 control-label">選擇系統</label>
+    <div class="col-lg-10">
+        <select id="select" name="select" onchange="showlist(this.value)"></select>
+        <script>
+
+        </script>
+    </div>
+</div>
+<br />
+
+<table class="display" id="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>案件代號</th>
+            <th>系統代號</th>
+            <th>問題分類名稱</th>
+            <th>諮詢人員姓名</th>
+            <th>起案日期</th>
+            <th>詢問次號</th>
+            <th>是否緊急</th>
+            <th>希望回復時間（小時）</th>
+            <th>案件狀態</th>
+            <th>結案日期</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CaseBase.CASE_NO</td>
+                <td id="SystText_@i">@item.CaseBase.SYST_NO</td>
+                <td>@item.SystClas.CLAS_NAME</td>
+                <td id="EmplText_@i">@item.CaseBase.EMPL_NO</td>
+                <td>@item.CaseBase.CASE_STAR_DATE</td>
+                <td>@item.QuerData.QUER_NUMB</td>
+                <td>
+                    <img src="~/images/@item.QuerData.URGE_IF" width="32" />
+                    @*@switch (item.QuerData.URGE_IF)
+                    {
+                        //case 0:
+                        //    Html.Raw("0");
+                        //    break;
+                        //case 1:
+                        //    Html.Raw("1");
+                        //    break;
+                        default:
+                            @item.QuerData.URGE_IF;
+                            break;
+                    }*@
+                </td>
+                <td>@item.QuerData.EXPE_REPL_TIME</td>
+                <td>@item.QuerData.CASE_STAT</td>
+                <td>@item.CaseBase.CASE_END_DATE</td>
+                <td>
+                    @Html.ActionLink("回覆", "Ansr", new { caseno = item.CaseBase.CASE_NO, systno = item.CaseBase.SYST_NO, numb = item.QuerData.QUER_NUMB })
+                </td>
+            </tr>
+            i = i + 1;
+        }
+    </tbody>
+</table>
+<input type="hidden" id="ModelRowCount" name="ModelRowCount" value="@Model.Count()" />
+<input type="hidden" name="name" value="" />
+
+<script src="~/Content/datatable/jquery.dataTables.min.js"></script>
+<!-- rel="stylesheet"必要 -->
+<link href="~/Content/datatable/jquery.dataTables.min.css" rel="stylesheet" />
+
+<script>
+    var applist;
+    var table;
+    $(document).ready(function () {
+        //alert('test');
+        table = $('#table').DataTable();
+    });
+
+    function showlist(val) {
+        if (val == "") {
+            location.reload();
+        } else {
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("Getdata", "Ansr")',
+                data: { id: val },
+            })
+            .done(function (data) {
+                //console.log(applist)
+                //清除原datatable的資料
+                table.clear().draw();
+
+                //將ajax從controller得到的data，利用迴圈新增至datatable內
+                for (var i = 0; i < data.length; i++) {
+
+                    //取出當列，要進行比較的欄位資料
+                    var SystText = data[i][1];
+                    var EmplText = data[i][3];
+
+                    //API的資料群，每列API資料都將和前面的［欄位資料］做比較
+                    $.each(applist, function (i) {
+
+                        var APPL_ID = applist[i].APPL_ID;
+                        var APPL_NAME = applist[i].APPL_NAME;
+                        var DEVP_ID = applist[i].DEVP_ID;
+                        var DEVP_NAME = applist[i].DEVP_NAME;
+                        
+                        //console.log($("#ModelRowCount").val())
+                        //console.log(SystText);
+                        //console.log(applist[i].APPL_ID == $("#SystText_" + j).text);
+                        //console.log(APPL_ID);
+                        //console.log(SystText);
+                        //console.log("...");
+
+                        //如果比對符合，就將原本Datatable要Draw的資料由英文換成中文
+                        if (APPL_ID == SystText) {
+                            SystText = APPL_NAME;
+                        }
+                        if (DEVP_ID == EmplText) {
+                            EmplText = DEVP_NAME;
+                        }
+                    });
+
+                    table.row.add([
+                        data[i][0],
+                        SystText,
+                        data[i][2],
+                        EmplText,
+                        data[i][4],
+                        data[i][5],
+                        data[i][6],
+                        data[i][7],
+                        data[i][8],
+                        data[i][9],
+                        '<a href="/Ansr/Ansr">回覆</a>',
+                    ]).draw();
+                }
+
+                //data[i].CaseBase.CASE_NO,
+                //data[i].CaseBase.SYST_NO,
+                //data[i].SystClas.CLAS_NAME,
+                //data[i].CaseBase.EMPL_NO,
+                //data[i].CaseBase.CASE_STAR_DATE,
+                //data[i].QuerData.QUER_NUMB,
+                //data[i].QuerData.URGE_IF,
+                //data[i].QuerData.EXPE_REPL_TIME,
+                //data[i].QuerData.CASE_STAT,
+                //data[i].SystClas.CASE_END_DATE,
+            });
+        }
+    } 
+</script>
+
+@*表格箭頭*@
+<style>
+    table.dataTable thead .sorting_asc {
+        background: url("http://cdn.datatables.net/1.10.0/images/sort_asc.png") no-repeat center left;
+    }
+
+    table.dataTable thead .sorting_desc {
+        background: url("http://cdn.datatables.net/1.10.0/images/sort_desc.png") no-repeat center left;
+    }
+
+    table.dataTable thead .sorting {
+        background: url("http://cdn.datatables.net/1.10.0/images/sort_both.png") no-repeat center left;
+    }
+</style>
+
