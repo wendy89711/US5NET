@@ -134,6 +134,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\US1000\QuerController.cs" />
     <Compile Include="Controllers\US2000\AnsrController.cs" />
     <Compile Include="Controllers\US2000\SystClasController.cs" />
     <Compile Include="Controllers\US2000\SystQAdbController.cs" />
@@ -396,10 +397,10 @@
     <Content Include="Views\SystQAdb\Index.cshtml" />
     <Content Include="Views\Ansr\Index.cshtml" />
     <Content Include="Views\Ansr\Ansr.cshtml" />
+    <Content Include="Views\Quer\Quer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\US1000\" />
     <Folder Include="FileUploads\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>

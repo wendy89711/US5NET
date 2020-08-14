@@ -4,6 +4,14 @@
     ViewBag.Title = "案件清單";
 }
 
+<style>
+    h2 {
+        font-family: 'Microsoft JhengHei';
+        font-weight: bold;
+        letter-spacing: 10px;
+    }
+</style>
+
 <h2>案件清單</h2>
 
 <script>
@@ -99,19 +107,19 @@
                 <td>@item.CaseBase.CASE_STAR_DATE</td>
                 <td>@item.QuerData.QUER_NUMB</td>
                 <td>
-                    <img src="~/images/@item.QuerData.URGE_IF" width="32" />
-                    @*@switch (item.QuerData.URGE_IF)
+                    @*<img src="~/images/@item.QuerData.URGE_IF" width="32" />*@
+                    @switch (item.QuerData.URGE_IF)
                     {
-                        //case 0:
-                        //    Html.Raw("0");
-                        //    break;
                         //case 1:
+                            //Html.Raw("0");
+                        //    break;
+                        //case 2:
                         //    Html.Raw("1");
                         //    break;
                         default:
                             @item.QuerData.URGE_IF;
                             break;
-                    }*@
+                    }
                 </td>
                 <td>@item.QuerData.EXPE_REPL_TIME</td>
                 <td>@item.QuerData.CASE_STAT</td>
@@ -167,7 +175,7 @@
                         var APPL_NAME = applist[i].APPL_NAME;
                         var DEVP_ID = applist[i].DEVP_ID;
                         var DEVP_NAME = applist[i].DEVP_NAME;
-                        
+
                         //console.log($("#ModelRowCount").val())
                         //console.log(SystText);
                         //console.log(applist[i].APPL_ID == $("#SystText_" + j).text);
@@ -211,7 +219,7 @@
                 //data[i].SystClas.CASE_END_DATE,
             });
         }
-    } 
+    }
 </script>
 
 @*表格箭頭*@

@@ -1,0 +1,300 @@
+﻿@model IEnumerable<US5NET.Models.US.T_SYST_CLAS>
+@{
+    ViewBag.Title = "Quer";
+}
+
+<head>
+    @*<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>*@
+</head>
+<style>
+    h2 {
+        font-family: 'Microsoft JhengHei';
+        font-weight: bold;
+        letter-spacing: 10px;
+    }
+
+    form {
+        /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+        font: 100% verdana,arial,sans-serif;
+        margin: auto;
+        padding: 0;
+        min-width: 360px;
+        max-width: 600px;
+        width: 240px;
+    }
+
+
+    /*p {
+        font-family: 'Microsoft JhengHei';
+        font-weight: bold;
+        font-size: 25px;
+    }*/
+
+    .form-group > p {
+        font-family: 'Microsoft JhengHei';
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+
+
+    .form-check {
+        margin: 0px auto;
+    }
+
+    .custom-control {
+        margin: 0px auto;
+    }
+
+    .btn-group > .btn btn-secondary dropdown-toggle {
+        margin: 0px auto;
+    }
+
+    .btn-group {
+        max-height: 350px;
+        overflow-y: auto;
+        width: 280px;
+    }
+
+    .btn-group {
+        width: 280px;
+        height: 45px;
+    }
+
+    .btn-primary {
+        width: 280px;
+        height: 45px;
+        color: white;
+    }
+
+    textarea {
+        resize: none;
+    }
+</style>
+
+
+
+<h2>訊問問題</h2>
+<hr />
+</br>
+
+<div class="form00">
+
+    <form class="form_01" method="post" name="form" action="@Url.Action("Quers")" enctype="multipart/form-data" onsubmit="return check()">
+        <p style="
+            font-family: 'Microsoft JhengHei';
+            font-weight: bold;
+            font-size: 25px;">請填寫下列資料</p>
+        @* @Url.Action("Quers") *@
+
+        <select id="option_system" class="mdb-select md-form btn btn-primary dropdown-toggle" onchange="change_system(this.value)" name="option_system">
+            <option value="" disabled selected>請選擇系統分類</option>
+
+
+        </select>
+        <p></p>
+
+        <select id="option_problem" class="mdb-select md-form btn btn-primary dropdown-toggle" onchange="change_problem(this.value)" name="option_problem">
+            <option value="" disabled selected>請選擇問題分類</option>
+
+
+
+            @*   @foreach (var item in Model)
+                {
+
+
+                    <td>
+                    <option value="@Html.DisplayFor(modelItem => item.CLAS_NAME)"> @Html.DisplayFor(modelItem => item.CLAS_NAME)</option>
+                    </td>
+
+                }*@
+        </select>
+        <p></p>
+        <div class="form-group">
+
+            <textarea class="form-control" id="exampleFormControlTextarea_content" rows="10" placeholder="請填寫問題描述(上限1000字)" name="exampleFormControlTextarea_content" onchange="change_question(this.value)"></textarea>
+        </div>
+
+
+
+        <div class="form-group">
+            <input type="file" class="form-control-file" id="file" name="file" multiple>
+
+            <p>可加入電子檔輔助說明(選填)</br >(圖片,文件檔,可多項上傳)</p>
+        </div>
+
+
+
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="1">
+            <label class="custom-control-label" for="customRadioInline1">一般問題</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="2">
+            <label class="custom-control-label" for="customRadioInline2">緊急問題</label>
+        </div>
+        </br><p></p>
+        <select class="mdb-select md-form btn btn-primary dropdown-toggle" id="select_time" onchange="change_time(this.value)" name="select_time">
+            <option value="0" disabled="disabled" selected="selected">希望最晚回覆時間</option>
+            <option value="1">1小時</option>
+            <option value="2">2小時</option>
+            <option value="4">4小時</option>
+            <option value="6">6小時</option>
+            <option value="8">8小時</option>
+            <option value="10">10小時</option>
+            <option value="12">12小時</option>
+            <option value="24">24小時</option>
+            <option value="36">36小時</option>
+            <option value="48">48小時</option>
+            <option value="60">60小時</option>
+            <option value="72">72小時</option>
+        </select>
+        <p></p>
+
+        <div class="form-group">
+            <input type="submit" value="提交問題" id="problem_submit" class="btn-primary">
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Handler for .ready() called.
+        function myfunction() {
+            var api = "http://wwwap3.dorts.gov.tw/API/us5netapi/api/appllist";
+
+            
+            $.ajax({
+                url: api,
+                type: "GET",
+                dataType: "json",
+                success: function (JData) {
+                    var NumOfJData = JData.length;
+                    
+                    for (var i = 0; i < NumOfJData; i++) {
+                        $("#option_system").append('<option value = "' + JData[i]["APPL_ID"] + '">' + JData[i]["APPL_NAME"] + '</option>');
+                        //console.log('<option value = "' + JData[i]["APPL_ID"] + '">' + JData[i]["APPL_NAME"] + '</option>');
+                        //<input type="hidden" id="DEVP_ID" name="DEVP_ID" value="" />
+                    }
+                },
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+            });
+
+
+
+        }
+
+        //Call function
+        myfunction();
+    });
+
+    function change_system(val) {
+        //$("#op1").val();
+        //console.log(val)
+
+        $.ajax({
+            url: '@Url.Action("GetSystData", "Quer")',
+            type: "POST",
+            data: { id: val },
+            success: function (data) {
+                //console.log(data);
+                $("#option_problem").html("");
+                $("#option_problem").append('<option value = ""disabled selected>' + "請選擇問題分類" + '</option>');
+                var NumOfJData = data.length;
+
+                for (var i = 0; i < NumOfJData; i++) {
+                    $("#option_problem").append('<option value = "' + data[i]["CLAS_NO"] + '">' + data[i]["CLAS_NAME"] + '</option>');
+                   //  console.log('<option value = "' + data[i]["CLAS_NO"] + '">' + data[i]["CLAS_NAME"] + '</option>');
+                }
+              //  $("#DEVP_ID").val(JData[i]["DEVP_ID"]);
+
+                var system = document.getElementById('option_system').value;
+                console.log(system);
+
+
+
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    }
+    function change_problem() {
+        var problem = document.getElementById('option_problem').value;
+        console.log(problem);
+    }
+
+    function change_question() {
+        var question = document.getElementById('exampleFormControlTextarea_content').value;
+        console.log(question);
+    }
+    $('input[type=radio]').change(function () {
+        console.log($(this).val())
+    });
+    function change_time() {
+        var time = document.getElementById('select_time').value;
+        console.log(time);
+    }
+    function check() {
+
+
+
+        if (window.confirm('確定送出嗎?(請確認所填資料)')) {
+
+            if ($("select[name='option_system']").val() == null) {
+
+                alert("您尚未選擇系統分類");
+
+                return false;
+            }
+            if ($("select[name='option_problem']").val() == null) {
+
+                alert("您尚未選擇問題分類");
+
+                return false;
+            }
+            if ($("#exampleFormControlTextarea_content").val() == "") {
+
+                alert("您尚未填寫問題敘述");
+
+                return false;
+            }
+            if ($('input[name=customRadioInline1]:checked').val() != "1" && $('input[name=customRadioInline1]:checked').val() !="2"){
+
+                alert("您尚未勾選問題緊急度");
+
+                return false;
+            }
+            if ($("select[name='select_time']").val() == null) {
+
+                alert("您尚未填寫回覆時間");
+
+                return false;
+            }
+            alert("送出成功");
+            return true;
+
+        }
+        else {
+
+            window.alert('已取消');
+            return false;
+
+        }
+    }
+
+
+
+</script>
+
+
+
