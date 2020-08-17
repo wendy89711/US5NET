@@ -12,7 +12,7 @@ namespace US5NET.Controllers.US2000
 {
     public class SystQAdbController : Controller
     {
-        private USEntities db = new USEntities();
+        private USLocalEntities db = new USLocalEntities();
 
         // GET: SystQAdb
         public ActionResult Index()

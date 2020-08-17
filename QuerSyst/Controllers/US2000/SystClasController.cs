@@ -12,7 +12,7 @@ namespace US5NET.Controllers.US2000
 {
     public class SystClasController : Controller
     {
-        private USEntities db = new USEntities();
+        private USLocalEntities db = new USLocalEntities();
 
         // GET: T_SYST_CLAS
         public ActionResult Index()

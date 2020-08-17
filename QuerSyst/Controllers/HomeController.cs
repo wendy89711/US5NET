@@ -10,7 +10,7 @@ namespace QuerSyst.Controllers
 {
     public class HomeController : Controller
     {
-        USEntities us = new USEntities();
+        USLocalEntities us = new USLocalEntities();
 
         public ActionResult Index()
         {

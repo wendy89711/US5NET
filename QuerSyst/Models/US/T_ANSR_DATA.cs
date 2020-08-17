@@ -11,13 +11,19 @@ namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class T_ANSR_DATA
     {
+        [DisplayName ("案件代號")]
         public string CASE_NO { get; set; }
+        [DisplayName("詢問次號")]
         public int QUER_NUMB { get; set; }
+        [DisplayName("回覆內容")]
         public string ANSR_CONT { get; set; }
+        [DisplayName("回覆時間")]
         public string ANSR_DATE { get; set; }
+        [DisplayName("Q&A序號")]
         public string QA_NO { get; set; }
     
         public virtual T_CASE_BASE T_CASE_BASE { get; set; }

@@ -13,7 +13,7 @@ namespace US5NET.Controllers.US1000
 {
     public class QuerController : Controller
     {
-        private USEntities db = new USEntities();
+        private USLocalEntities db = new USLocalEntities();
 
         
         public ActionResult Quer()

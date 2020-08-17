@@ -17,7 +17,7 @@ namespace US5NET.Models.US
     {
         [DisplayName("系統代號")]
         public string SYST_NO { get; set; }
-        [DisplayName("分類代號")]
+        [DisplayName("序號")]
         public string CLAS_NO { get; set; }
         [DisplayName("分類名稱")]
         public string CLAS_NAME { get; set; }

@@ -14,7 +14,7 @@ namespace US5NET.Controllers.US2000
     public class AnsrController : Controller
     {
 
-        private USEntities db = new USEntities();
+        private USLocalEntities db = new USLocalEntities();
 
         // GET: Ansr
         public ActionResult Index()

@@ -24,7 +24,7 @@
                 success: function (data) {
                     //console.log(data);
                     applist = data;
-                    $('#select').append($('<option value="">請選擇...</option>'));
+                    $('#select').append($('<option value="">全部</option>'));
                     $.each(data, function (i) {
                         $('#select').append($('<option></option>')
                             .val(data[i].APPL_ID)
@@ -36,6 +36,7 @@
                         var APPL_NAME = data[i].APPL_NAME;
                         var DEVP_ID = data[i].DEVP_ID;
                         var DEVP_NAME = data[i].DEVP_NAME;
+
                         //將Table Column Assign Name
                         for (var j = 1; j <= $("#ModelRowCount").val(); j++) {
                             /*
@@ -81,9 +82,9 @@
     <thead>
         <tr>
             <th>案件代號</th>
-            <th>系統代號</th>
-            <th>問題分類名稱</th>
-            <th>諮詢人員姓名</th>
+            <th width="15%">系統名稱</th>
+            <th>問題分類@*名稱*@</th>
+            <th>諮詢人員@*姓名*@</th>
             <th>起案日期</th>
             <th>詢問次號</th>
             <th>是否緊急</th>
@@ -107,19 +108,11 @@
                 <td>@item.CaseBase.CASE_STAR_DATE</td>
                 <td>@item.QuerData.QUER_NUMB</td>
                 <td>
-                    @*<img src="~/images/@item.QuerData.URGE_IF" width="32" />*@
-                    @switch (item.QuerData.URGE_IF)
-                    {
-                        //case 1:
-                            //Html.Raw("0");
-                        //    break;
-                        //case 2:
-                        //    Html.Raw("1");
-                        //    break;
-                        default:
-                            @item.QuerData.URGE_IF;
-                            break;
+                    @{
+                        var icon1 = (item.QuerData.EXPE_REPL_TIME < 24)? "/images/2.png" : "/images/1.png";
                     }
+                    <div><img src="@icon1" width="32" /></div>
+                    <span>@item.QuerData.EXPE_REPL_TIME hr</span>
                 </td>
                 <td>@item.QuerData.EXPE_REPL_TIME</td>
                 <td>@item.QuerData.CASE_STAT</td>
@@ -144,7 +137,11 @@
     var table;
     $(document).ready(function () {
         //alert('test');
-        table = $('#table').DataTable();
+        table = $('#table').DataTable({
+            "order": [[7, "asc"]]
+        });
+        // Hide columns
+        table.columns([7]).visible(false);
     });
 
     function showlist(val) {
@@ -167,6 +164,9 @@
                     //取出當列，要進行比較的欄位資料
                     var SystText = data[i][1];
                     var EmplText = data[i][3];
+                    var EXPE_REPL_TIME = data[i][6];
+                    var icon1 = (EXPE_REPL_TIME < 24) ? "/images/2.png" : "/images/1.png";
+                    var ShowIcon = "<div><img src='" + icon1 + "' width='32' /></div><span>" + EXPE_REPL_TIME+" hr</span>";
 
                     //API的資料群，每列API資料都將和前面的［欄位資料］做比較
                     $.each(applist, function (i) {
@@ -199,12 +199,17 @@
                         EmplText,
                         data[i][4],
                         data[i][5],
-                        data[i][6],
+                        ShowIcon,
                         data[i][7],
                         data[i][8],
                         data[i][9],
-                        '<a href="/Ansr/Ansr">回覆</a>',
+                        '<a href="/Ansr/Ansr?caseno=' + data[i][0] + '&amp;systno=' + data[i][1] + '&amp;numb=' + data[i][5]+'">回覆</a>',
                     ]).draw();
+
+                    // Sort by column 1 and then re-draw
+                    table
+                        .order([7, 'asc'])
+                        .draw();
                 }
 
                 //data[i].CaseBase.CASE_NO,

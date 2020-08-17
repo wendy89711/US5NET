@@ -11,15 +11,23 @@ namespace US5NET.Models.US
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class T_QUER_DATA
     {
+        [DisplayName("案件序號")]
         public string CASE_NO { get; set; }
+        [DisplayName("詢問次號")]
         public int QUER_NUMB { get; set; }
+        [DisplayName("是否緊急")]
         public int URGE_IF { get; set; }
+        [DisplayName("希望回覆時間")]
         public int EXPE_REPL_TIME { get; set; }
+        [DisplayName("諮詢內容")]
         public string QUER_CONT { get; set; }
+        [DisplayName("諮詢時間")]
         public string QUER_DATE { get; set; }
+        [DisplayName("案件狀態")]
         public string CASE_STAT { get; set; }
     
         public virtual T_CASE_BASE T_CASE_BASE { get; set; }
