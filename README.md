@@ -3,7 +3,7 @@
 - [繁體中文版](README_zh.md)
 - An Application System Consultation Service Platform built with ASP.NET MVC 5.
 
-![Project Demo](demo_image/UI.png)
+![Project Demo](demo_image/UI_US5NET.png)
 
 
 
