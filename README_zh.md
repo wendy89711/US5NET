@@ -24,7 +24,7 @@ US5NET/                              # 專案根目錄（GitHub Repo Root）
 │  ├─ Properties/                    # 專案屬性與組件資訊（AssemblyInfo）
 │  ├─ Scripts/                       # 前端 JS（查詢/分頁、表單驗證、AJAX 呼叫、互動邏輯）
 │  ├─ Views/                         # Razor 視圖；Shared/_Layout.cshtml 為全站共用版型
-│  ├─ images/                        # 網站圖片資產（Logo、插圖、圖示）
+│  ├─ images/                        # 網站圖片（Logo、插圖、圖示）
 │  ├─ Global.asax                    # 應用程式入口；Application_Start() 註冊路由/篩選器/Bundle
 │  ├─ Global.asax.cs                 # Global.asax 的程式碼後置
 │  ├─ US5NET.csproj                  # 專案檔（編譯項目、組態、目標 .NET Framework）
