@@ -7,7 +7,7 @@
 
 ## 系統需求
 - **IDE**：Visual Studio 2019 或 2022（含 .NET 開發工作負載）
-- **資料庫**（若有）：SQL Server / SQL Server Express / LocalDB 皆可
+- **資料庫**：SQL Server / SQL Server Express / LocalDB 皆可
 
 
 
