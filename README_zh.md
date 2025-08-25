@@ -11,7 +11,7 @@
 
 
 
-## 資料夾結構
+## 專案結構
 ```bash
 US5NET/                              # 專案根目錄（GitHub Repo Root）
 ├─ QuerSyst/                         # ASP.NET MVC 5 網站專案（主程式碼所在）
