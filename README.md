@@ -13,7 +13,7 @@
 - Database (if used): SQL Server / SQL Server Express / LocalDB
 
 
-## Folder Structure
+## Project Structure
 ```bash
 US5NET/                              — Project root (GitHub repo root)
 ├─ QuerSyst/                         — ASP.NET MVC 5 web project (main application code)
